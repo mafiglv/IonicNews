@@ -6,14 +6,14 @@ Projeto desenvolvido pelo grupo **Ana Beatriz**, **Flávia Sousa Amazonas**, **G
 
 ---
 
-## 📋 Descrição do Projeto
+##  Descrição do Projeto
 Este aplicativo permite conversão de moedas em tempo real com suporte a várias moedas, históricos de conversão e interface gráfica de conversões.
 
 O sistema foi desenvolvido em Ionic e TypeScript.
 
 ---
 
-## 🛠 Funcionalidades Implementadas
+##  Funcionalidades Implementadas
 
 - Integração com API de conversão de moedas
 - Interface de usuário responsiva
@@ -27,13 +27,13 @@ O sistema foi desenvolvido em Ionic e TypeScript.
 
 ---
 
-## 📱 Telas do Aplicativo
+##  Telas do Aplicativo
 
 ### Tela Inicial
 
 ---
 
-## 🚀 Como Rodar o Projeto
+##  Como Rodar o Projeto
 
 1. Clone o repositório:
    ```bash
@@ -49,11 +49,11 @@ O sistema foi desenvolvido em Ionic e TypeScript.
 
 4. Acesse no navegador:
 
-📋 Requisitos
+ Requisitos
 npm versão 6.x ou superior
 
 Navegador atualizado (Google Chrome, Edge ou Firefox)
 
-## 📝 Licença
+##  Licença
 
 Este projeto está licenciado sob a Licença Creative Commons CC0 1.0 Universal (Domínio Público).
