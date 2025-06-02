@@ -37,7 +37,7 @@ O sistema foi desenvolvido em Ionic e TypeScript.
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/flaviamazonas/IonicNews.git
+   git clone https://github.com/mafiglv/IonicNews.git
 
 2. Instale as dependências:
     ```bash
