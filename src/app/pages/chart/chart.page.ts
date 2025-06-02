@@ -15,7 +15,7 @@ Chart.register(...registerables);
   styleUrls: ['./chart.page.scss']
 })
 export class ChartPage implements AfterViewInit {
-  history!: Conversion[];
+  history: Conversion[] = [];
   error: string = '';
 
   constructor(private storageService: StorageService) {}
@@ -36,44 +36,39 @@ export class ChartPage implements AfterViewInit {
       return;
     }
 
-    // Prepara labels e dados (últimas 10 entradas)
-    const last10 = this.history.slice(0, 10);
+    const last10 = this.history.slice(0, 10).reverse();
     const labels = last10.map(h => `${h.base}→${h.target}`);
     const dataPoints = last10.map(h => h.result);
 
-    // Cria o gráfico de barras
     new Chart(canvas, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels,
         datasets: [
           {
-            label: 'Resultado',
+            label: 'Resultado da Conversão',
             data: dataPoints,
-            backgroundColor: 'rgba(70, 130, 180, 0.7)', // SteelBlue translúcido
-            borderWidth: 1
+            borderColor: '#3e64ff',
+            backgroundColor: 'rgba(62, 100, 255, 0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
           }
         ]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: { display: false }
+          legend: { display: true }
         },
         scales: {
           x: {
-            ticks: {
-              color: '#333333',
-              maxRotation: 45,
-              minRotation: 45,
-              autoSkip: false
-            }
+            ticks: { color: '#333' }
           },
           y: {
             beginAtZero: true,
-            ticks: {
-              color: '#333333'
-            }
+            ticks: { color: '#333' }
           }
         }
       }

@@ -21,11 +21,11 @@ export class HomePage implements OnInit {
   error: string = '';
 
   availableCurrencies = [
-    { code: 'BRL', label: 'Real (BRL)' },
-    { code: 'USD', label: 'Dólar (USD)' },
-    { code: 'EUR', label: 'Euro (EUR)' },
-    { code: 'GBP', label: 'Libra (GBP)' },
-    { code: 'JPY', label: 'Iene (JPY)' },
+    { code: 'BRL', label: 'Real Brasileiro', flag: '🇧🇷' },
+    { code: 'USD', label: 'Dólar Americano', flag: '🇺🇸' },
+    { code: 'EUR', label: 'Euro', flag: '🇪🇺' },
+    { code: 'GBP', label: 'Libra Esterlina', flag: '🇬🇧' },
+    { code: 'JPY', label: 'Iene Japonês', flag: '🇯🇵' }
   ];
 
   constructor(
@@ -35,13 +35,9 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     const defaultCur = await this.storageService.get('defaultCurrency');
-    if (defaultCur) {
-      this.fromCurrency = defaultCur;
-    }
+    if (defaultCur) this.fromCurrency = defaultCur;
     const lastTo = await this.storageService.get('lastToCurrency');
-    if (lastTo) {
-      this.toCurrency = lastTo;
-    }
+    if (lastTo) this.toCurrency = lastTo;
   }
 
   swapCurrencies() {

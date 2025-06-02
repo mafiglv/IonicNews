@@ -23,6 +23,7 @@
     "@capacitor/ios": "^7.2.0",
     "@ionic/angular": "^7.8.6",
     "@ionic/storage-angular": "^4.0.0",
+    "chart.js": "^4.4.9",
     "rxjs": "7.8.1",
     "tslib": "2.6.2"
   },
@@ -31,6 +32,7 @@
     "@angular/cli": "^19.2.14",
     "@angular/compiler-cli": "^19.2.14",
     "@ionic/angular-toolkit": "^12.2.0",
+    "@types/chart.js": "^2.9.41",
     "typescript": "^5.8.3",
     "zone.js": "^0.15.1"
   }

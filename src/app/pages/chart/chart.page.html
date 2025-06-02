@@ -1,18 +1,18 @@
 <ion-header class="header">
   <ion-toolbar>
-    <ion-title>Gráfico de Conversões</ion-title>
+    <ion-title class="ion-text-center">Gráfico de Conversões</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content">
-  <div class="card">
-    <ng-container *ngIf="error">
-      <div class="error-message">
-        <ion-icon name="alert-circle-outline"></ion-icon>
-        <span>{{ error }}</span>
-      </div>
-    </ng-container>
+<ion-content class="ion-padding content-bg">
+  <ng-container *ngIf="error">
+    <div class="error-message">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span>{{ error }}</span>
+    </div>
+  </ng-container>
 
+  <div class="card">
     <canvas id="myChart" class="chart-canvas"></canvas>
 
     <ng-container *ngIf="!history?.length && !error">

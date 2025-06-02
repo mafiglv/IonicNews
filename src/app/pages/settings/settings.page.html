@@ -18,7 +18,7 @@
       <span>{{ successMessage }}</span>
     </div>
 
-    <!-- Seleção de Moeda Padrão -->
+    <!-- Moeda padrão -->
     <ion-item lines="none" class="input-item">
       <ion-label class="label">Moeda Padrão</ion-label>
       <ion-select [(ngModel)]="defaultCurrency" interface="popover" class="select">
@@ -31,20 +31,20 @@
       </ion-select>
     </ion-item>
 
-    <!-- Toggle Modo Offline -->
+    <!-- Modo offline -->
     <ion-item lines="none" class="input-item">
       <ion-label class="label">Modo Offline</ion-label>
       <ion-toggle slot="end" [(ngModel)]="offlineMode"></ion-toggle>
     </ion-item>
 
-    <!-- Botões Salvar e Limpar Histórico -->
+    <!-- Botões -->
     <ion-button (click)="saveSettings()" class="save-button" expand="block">
-      <ion-icon name="save-outline" slot="start"></ion-icon>
+      <ion-icon slot="start" name="save-outline"></ion-icon>
       Salvar Configurações
     </ion-button>
 
     <ion-button (click)="clearHistory()" class="clear-button" expand="block" fill="outline">
-      <ion-icon name="trash-outline" slot="start"></ion-icon>
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
       Limpar Histórico
     </ion-button>
   </div>

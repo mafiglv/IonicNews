@@ -1,80 +1,56 @@
-<ion-header class="header">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Conversor de Moedas</ion-title>
+    <ion-title class="ion-text-center">Conversor de Moedas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="content">
+<ion-content class="ion-padding content-bg">
+  <p class="intro">Verifique taxas em tempo real, defina alertas de taxas, receba notificações e muito mais.</p>
+
   <div class="card">
-    <div class="row top-row">
-      <!-- Valor -->
-      <ion-item lines="none" class="input-item">
-        <ion-label position="stacked" class="label">Valor</ion-label>
-        <ion-input
-          type="number"
-          [(ngModel)]="amount"
-          placeholder="0,00"
-          class="input"
-        ></ion-input>
-      </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked">Quantidade</ion-label>
+      <ion-input type="number" [(ngModel)]="amount" placeholder="0,00"></ion-input>
+    </ion-item>
 
-      <!-- Converter de -->
-      <ion-item lines="none" class="input-item">
-        <ion-label position="stacked" class="label">Converter de</ion-label>
-        <ion-select [(ngModel)]="fromCurrency" interface="popover" class="select">
-          <ion-select-option
-            *ngFor="let c of availableCurrencies"
-            [value]="c.code"
-          >
-            {{ c.label }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked">De</ion-label>
+      <ion-select [(ngModel)]="fromCurrency" interface="popover">
+        <ion-select-option *ngFor="let c of availableCurrencies" [value]="c.code">
+          {{ c.flag }} {{ c.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
-      <!-- Botão de swap -->
-      <div class="swap-button-container">
-        <ion-button (click)="swapCurrencies()" class="swap-button" fill="outline">
-          <ion-icon name="swap-vertical" slot="icon-only"></ion-icon>
-        </ion-button>
-      </div>
-
-      <!-- Para (toCurrency) -->
-      <ion-item lines="none" class="input-item">
-        <ion-label position="stacked" class="label">Para</ion-label>
-        <ion-select [(ngModel)]="toCurrency" interface="popover" class="select">
-          <ion-select-option
-            *ngFor="let c of availableCurrencies"
-            [value]="c.code"
-          >
-            {{ c.label }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Botão de converter -->
-      <ion-button (click)="convert()" class="convert-button" expand="block">
-        <ion-icon name="sync" slot="start"></ion-icon>
-        Converter
+    <div class="swap-container">
+      <ion-button fill="clear" (click)="swapCurrencies()" class="swap-button">
+        <ion-icon slot="icon-only" name="swap-vertical-outline"></ion-icon>
       </ion-button>
     </div>
 
-    <!-- Display do Resultado -->
-    <div class="result-card" *ngIf="result !== null">
-      <div class="result-header">Resultado da Conversão</div>
-      <div class="result-body">
-        <div>
-          <strong>De:</strong> {{ fromCurrency }}<br />
-          <strong>Para:</strong> {{ toCurrency }}<br />
-          <strong>Valor:</strong> {{ amount | number: '1.2-2' }}<br />
-          <strong>Resultado:</strong> {{ result | number: '1.4-4' }}
-        </div>
-        <div class="rate-info">
-          <small><strong>Data da Cotação:</strong> {{ lastUpdate }}</small>
-        </div>
-      </div>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked">Para</ion-label>
+      <ion-select [(ngModel)]="toCurrency" interface="popover">
+        <ion-select-option *ngFor="let c of availableCurrencies" [value]="c.code">
+          {{ c.flag }} {{ c.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" class="convert-button" (click)="convert()">
+      <ion-icon slot="start" name="sync-outline"></ion-icon>
+      Converter
+    </ion-button>
+
+    <div *ngIf="result !== null" class="result-box">
+      <h3>Resultado da Conversão</h3>
+      <p><strong>De:</strong> {{ fromCurrency }}</p>
+      <p><strong>Para:</strong> {{ toCurrency }}</p>
+      <p><strong>Valor:</strong> {{ amount | number:'1.2-2' }}</p>
+      <p><strong>Resultado:</strong> {{ result | number:'1.4-4' }}</p>
+      <small><strong>Data da Cotação:</strong> {{ lastUpdate }}</small>
     </div>
 
-    <!-- Mensagens de Erro -->
     <div class="error-message" *ngIf="error">
       <ion-icon name="alert-circle-outline"></ion-icon>
       <span>{{ error }}</span>
