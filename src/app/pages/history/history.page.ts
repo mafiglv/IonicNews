@@ -24,4 +24,8 @@ export class HistoryPage implements OnInit {
       this.error = 'Erro ao carregar histórico: ' + e.message;
     }
   }
+
+  formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleString('pt-BR');
+  }
 }

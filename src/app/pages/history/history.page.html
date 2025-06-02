@@ -8,16 +8,16 @@
     <ion-label>
       <div class="item-upper">
         <span class="currency-pair">
-          {{ item?.base }} → {{ item?.target }}
+          {{ item.base }} → {{ item.target }}
         </span>
-        <span class="date">{{ item?.date }}</span>
+        <span class="date">{{ formatDate(item.date) }}</span>
       </div>
       <div class="item-lower">
         <span>
-          Valor: {{ item?.amount | number:'1.2-2' }} → {{ item?.result | number:'1.4-4' }}
+          Valor: {{ item.amount | number:'1.2-2' }} → {{ item.result | number:'1.4-4' }}
         </span>
         <span class="rate">
-          Taxa: {{ item?.rate | number:'1.6-6' }}
+          Taxa: {{ item.rate | number:'1.6-6' }}
         </span>
       </div>
     </ion-label>
