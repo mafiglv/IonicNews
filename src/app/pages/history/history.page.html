@@ -1,0 +1,25 @@
+<div *ngIf="error" class="error-message">
+  <ion-icon name="alert-circle-outline"></ion-icon>
+  <span>{{ error }}</span>
+</div>
+
+<ion-list *ngIf="history && history.length > 0">
+  <ion-item *ngFor="let item of history">
+    <ion-label>
+      <div class="item-upper">
+        <span class="currency-pair">
+          {{ item?.base }} → {{ item?.target }}
+        </span>
+        <span class="date">{{ item?.date }}</span>
+      </div>
+      <div class="item-lower">
+        <span>
+          Valor: {{ item?.amount | number:'1.2-2' }} → {{ item?.result | number:'1.4-4' }}
+        </span>
+        <span class="rate">
+          Taxa: {{ item?.rate | number:'1.6-6' }}
+        </span>
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-list>

@@ -1,0 +1,7 @@
+{
+  "name": "IonicNews",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

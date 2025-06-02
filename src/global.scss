@@ -1,0 +1,26 @@
+:root {
+  --ion-color-primary: #000000;
+  --ion-color-secondary: #444444;
+  --ion-color-tertiary: #aaaaaa;
+
+  --ion-background-color: #121212;
+  --ion-text-color: #ffffff;
+
+  --ion-card-background: #1e1e1e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #121212;
+    --ion-text-color: #ffffff;
+  }
+}
+
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+ion-toolbar {
+  --background: #1f1f1f;
+  --color: white;
+}

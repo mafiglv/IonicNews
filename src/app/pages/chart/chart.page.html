@@ -1,0 +1,24 @@
+<ion-header class="header">
+  <ion-toolbar>
+    <ion-title>Gráfico de Conversões</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <div class="card">
+    <ng-container *ngIf="error">
+      <div class="error-message">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>{{ error }}</span>
+      </div>
+    </ng-container>
+
+    <canvas id="myChart" class="chart-canvas"></canvas>
+
+    <ng-container *ngIf="!history?.length && !error">
+      <div class="empty-state">
+        Nenhum dado no histórico para exibir o gráfico.
+      </div>
+    </ng-container>
+  </div>
+</ion-content>

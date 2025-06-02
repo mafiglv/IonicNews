@@ -1,0 +1,51 @@
+<ion-header class="header">
+  <ion-toolbar>
+    <ion-title>Configurações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <div class="card">
+    <!-- Erro -->
+    <div *ngIf="error" class="error-message">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span>{{ error }}</span>
+    </div>
+
+    <!-- Sucesso -->
+    <div *ngIf="successMessage" class="success-message">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <span>{{ successMessage }}</span>
+    </div>
+
+    <!-- Seleção de Moeda Padrão -->
+    <ion-item lines="none" class="input-item">
+      <ion-label class="label">Moeda Padrão</ion-label>
+      <ion-select [(ngModel)]="defaultCurrency" interface="popover" class="select">
+        <ion-select-option
+          *ngFor="let c of availableCurrencies"
+          [value]="c.code"
+        >
+          {{ c.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Toggle Modo Offline -->
+    <ion-item lines="none" class="input-item">
+      <ion-label class="label">Modo Offline</ion-label>
+      <ion-toggle slot="end" [(ngModel)]="offlineMode"></ion-toggle>
+    </ion-item>
+
+    <!-- Botões Salvar e Limpar Histórico -->
+    <ion-button (click)="saveSettings()" class="save-button" expand="block">
+      <ion-icon name="save-outline" slot="start"></ion-icon>
+      Salvar Configurações
+    </ion-button>
+
+    <ion-button (click)="clearHistory()" class="clear-button" expand="block" fill="outline">
+      <ion-icon name="trash-outline" slot="start"></ion-icon>
+      Limpar Histórico
+    </ion-button>
+  </div>
+</ion-content>
