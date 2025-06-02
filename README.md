@@ -33,6 +33,13 @@ O sistema foi desenvolvido em Ionic e TypeScript.
 
 ---
 
+## 📄 Documentação do projeto
+
+- [Apresentação](https://drive.google.com/file/d/1V1rvGXMMMdUhCKIZweND0cm51Kk740rO/view?usp=sharing)
+- [Casos de uso](https://drive.google.com/file/d/1NYd0JurPdWMIQKh2E5j0V44f61lffw35/view?usp=sharing)
+
+---
+
 ## 🚀 Como Rodar o Projeto
 
 1. Clone o repositório:
