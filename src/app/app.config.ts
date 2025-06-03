@@ -1,23 +1,20 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideHttpClient } from '@angular/common/http';
-
-import { Storage } from '@ionic/storage-angular';
+import { provideIonicAngular } from '@ionic/angular/standalone';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideIonicAngular(),
+    provideIonicAngular({ animated: false }),
     provideHttpClient(),
     provideRouter(routes),
-  {
-      provide: Storage,
-        useFactory: () => {
-        const storage = new Storage();
-        storage.create();
-        return storage;
-      }
-    }
+    importProvidersFrom(
+      IonicStorageModule.forRoot({
+        name: '__ionicnewsdb',
+        driverOrder: ['localstorage'] 
+      })
+    )
   ]
 };

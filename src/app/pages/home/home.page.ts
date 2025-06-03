@@ -5,12 +5,18 @@ import { IonicModule } from '@ionic/angular';
 import { ExchangeService } from 'src/app/services/exchange.service';
 import { StorageService } from 'src/app/services/storage.service';
 
+interface CurrencyOption {
+  code: string;
+  label: string;
+  emoji: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit {
   amount: number = 1;
@@ -20,12 +26,12 @@ export class HomePage implements OnInit {
   lastUpdate: string = '';
   error: string = '';
 
-  availableCurrencies = [
-    { code: 'BRL', label: 'Real Brasileiro', flag: '🇧🇷' },
-    { code: 'USD', label: 'Dólar Americano', flag: '🇺🇸' },
-    { code: 'EUR', label: 'Euro', flag: '🇪🇺' },
-    { code: 'GBP', label: 'Libra Esterlina', flag: '🇬🇧' },
-    { code: 'JPY', label: 'Iene Japonês', flag: '🇯🇵' }
+  availableCurrencies: CurrencyOption[] = [
+    { code: 'BRL', label: 'Real (BRL)',  emoji: '🇧🇷' },
+    { code: 'USD', label: 'Dólar (USD)', emoji: '🇺🇸' },
+    { code: 'EUR', label: 'Euro (EUR)',  emoji: '🇪🇺' },
+    { code: 'GBP', label: 'Libra (GBP)', emoji: '🇬🇧' },
+    { code: 'JPY', label: 'Iene (JPY)',  emoji: '🇯🇵' }
   ];
 
   constructor(
@@ -33,18 +39,21 @@ export class HomePage implements OnInit {
     private storageService: StorageService
   ) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
+    await this.storageService.init(); 
+
     const defaultCur = await this.storageService.get('defaultCurrency');
     if (defaultCur) this.fromCurrency = defaultCur;
+
     const lastTo = await this.storageService.get('lastToCurrency');
     if (lastTo) this.toCurrency = lastTo;
   }
 
-  swapCurrencies() {
+  swapCurrencies(): void {
     [this.fromCurrency, this.toCurrency] = [this.toCurrency, this.fromCurrency];
   }
 
-  async convert() {
+  async convert(): Promise<void> {
     this.error = '';
     this.result = null;
 
@@ -52,12 +61,13 @@ export class HomePage implements OnInit {
       this.error = 'Insira um valor válido.';
       return;
     }
+
     if (this.fromCurrency === this.toCurrency) {
       this.error = 'Escolha moedas diferentes.';
       return;
     }
 
-    const offline = (await this.storageService.get('offlineMode')) || false;
+    const offline = (await this.storageService.get('offlineMode')) ?? false;
 
     if (offline) {
       const cachedRate = await this.storageService.get('lastRate');
@@ -70,24 +80,28 @@ export class HomePage implements OnInit {
       return;
     }
 
-    this.exchangeService.convert(this.fromCurrency, this.toCurrency, this.amount).subscribe(
-      async (data) => {
-        this.result = Number(data.result.toFixed(4));
-        this.lastUpdate = data.date;
-        await this.storageService.saveConversion({
-          base: this.fromCurrency,
-          target: this.toCurrency,
-          amount: this.amount,
-          result: this.result,
-          rate: data.rate,
-          date: this.lastUpdate,
-        });
-        await this.storageService.set('lastRate', data.rate);
-        await this.storageService.set('lastToCurrency', this.toCurrency);
-      },
-      (err) => {
-        this.error = 'Erro ao obter taxa: ' + err.message;
-      }
-    );
+    this.exchangeService
+      .convert(this.fromCurrency, this.toCurrency, this.amount)
+      .subscribe(
+        async (data) => {
+          this.result = Number(data.result.toFixed(4));
+          this.lastUpdate = data.date;
+
+          await this.storageService.saveConversion({
+            base: this.fromCurrency,
+            target: this.toCurrency,
+            amount: this.amount,
+            result: this.result,
+            rate: data.rate,
+            date: this.lastUpdate
+          });
+
+          await this.storageService.set('lastRate', data.rate);
+          await this.storageService.set('lastToCurrency', this.toCurrency);
+        },
+        (err) => {
+          this.error = 'Erro ao obter taxa: ' + (err?.message || 'Erro desconhecido');
+        }
+      );
   }
 }

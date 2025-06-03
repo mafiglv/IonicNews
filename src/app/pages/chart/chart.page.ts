@@ -15,7 +15,7 @@ Chart.register(...registerables);
   styleUrls: ['./chart.page.scss']
 })
 export class ChartPage implements AfterViewInit {
-  history: Conversion[] = [];
+  history!: Conversion[];
   error: string = '';
 
   constructor(private storageService: StorageService) {}
@@ -36,39 +36,43 @@ export class ChartPage implements AfterViewInit {
       return;
     }
 
-    const last10 = this.history.slice(0, 10).reverse();
+    // Pega as últimas 10 conversões
+    const last10 = this.history.slice(0, 10);
     const labels = last10.map(h => `${h.base}→${h.target}`);
-    const dataPoints = last10.map(h => h.result);
+    const dataPoints = last10.map(h => h.result || 0);
 
     new Chart(canvas, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels,
         datasets: [
           {
-            label: 'Resultado da Conversão',
+            label: 'Resultado',
             data: dataPoints,
-            borderColor: '#3e64ff',
-            backgroundColor: 'rgba(62, 100, 255, 0.1)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 5,
-            pointHoverRadius: 7,
+            backgroundColor: 'rgba(46, 46, 100, 0.7)', // Azul translúcido
+            borderWidth: 1
           }
         ]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: { display: true }
+          legend: { display: false }
         },
         scales: {
           x: {
-            ticks: { color: '#333' }
+            ticks: {
+              color: '#333333',
+              maxRotation: 45,
+              minRotation: 45,
+              autoSkip: false
+            }
           },
           y: {
             beginAtZero: true,
-            ticks: { color: '#333' }
+            ticks: {
+              color: '#333333'
+            }
           }
         }
       }

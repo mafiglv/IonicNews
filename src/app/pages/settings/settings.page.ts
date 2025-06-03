@@ -4,6 +4,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
 
+interface CurrencyOption {
+  code: string;
+  label: string;
+}
+
 @Component({
   selector: 'app-settings',
   standalone: true,
@@ -17,7 +22,7 @@ export class SettingsPage implements OnInit {
   error: string = '';
   successMessage: string = '';
 
-  availableCurrencies = [
+  availableCurrencies: CurrencyOption[] = [
     { code: 'BRL', label: 'Real (BRL)' },
     { code: 'USD', label: 'Dólar (USD)' },
     { code: 'EUR', label: 'Euro (EUR)' },

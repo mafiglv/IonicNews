@@ -1,16 +1,22 @@
+/* =================== IMPORTS OBRIGATÓRIOS DO IONIC =================== */
 @import "@ionic/angular/css/core.css";
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
+
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 @import "@ionic/angular/css/display.css";
-@import "theme/variables.scss";
 
-
+ion-page.ion-page-invisible {
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  z-index: 10 !important;
+}
 :root {
   --ion-color-primary: #1a1a1a;
   --ion-color-secondary: #666;
