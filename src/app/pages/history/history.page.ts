@@ -1,3 +1,4 @@
+// src/app/pages/history/history.page.ts
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -27,5 +28,11 @@ export class HistoryPage implements OnInit {
 
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleString('pt-BR');
+  }
+
+
+  async clearAll() {
+    await this.storageService.clearHistory();
+    this.history = [];
   }
 }

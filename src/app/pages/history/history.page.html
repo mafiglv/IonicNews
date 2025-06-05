@@ -1,25 +1,36 @@
-<div *ngIf="error" class="error-message">
-  <ion-icon name="alert-circle-outline"></ion-icon>
-  <span>{{ error }}</span>
-</div>
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>Histórico de Conversões</ion-title>
+    <ion-button slot="end" fill="clear" (click)="clearAll()">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
 
-<ion-list *ngIf="history && history.length > 0">
-  <ion-item *ngFor="let item of history">
-    <ion-label>
-      <div class="item-upper">
-        <span class="currency-pair">
-          {{ item.base }} → {{ item.target }}
-        </span>
-        <span class="date">{{ formatDate(item.date) }}</span>
-      </div>
-      <div class="item-lower">
-        <span>
-          Valor: {{ item.amount | number:'1.2-2' }} → {{ item.result | number:'1.4-4' }}
-        </span>
-        <span class="rate">
-          Taxa: {{ item.rate | number:'1.6-6' }}
-        </span>
-      </div>
-    </ion-label>
-  </ion-item>
-</ion-list>
+<ion-content class="ion-padding">
+  <div *ngIf="error" class="error-message">
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <span>{{ error }}</span>
+  </div>
+
+  <div *ngIf="history.length === 0">
+    <p class="empty-message">Não há conversões no histórico.</p>
+  </div>
+
+  <ion-list *ngIf="history.length > 0">
+    <ion-item *ngFor="let item of history">
+      <ion-label>
+        <div class="item-upper">
+          <span class="currency-pair">{{ item.base }} → {{ item.target }}</span>
+          <span class="date">{{ formatDate(item.date) }}</span>
+        </div>
+        <div class="item-lower">
+          <span>
+            Valor: {{ item.amount | number:'1.2-2' }} → {{ item.result | number:'1.2-2' }}
+          </span>
+          <span class="rate">Taxa: {{ item.rate | number:'1.4-4' }}</span>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

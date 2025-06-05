@@ -1,107 +1,109 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ExchangeService } from 'src/app/services/exchange.service';
-import { StorageService } from 'src/app/services/storage.service';
-
-interface CurrencyOption {
-  code: string;
-  label: string;
-  emoji: string;
-}
+import { ExchangeService } from '../../services/exchange.service';
+import { StorageService } from '../../services/storage.service';
+import { Conversion } from '../../models/conversion.model';
+import { Currency } from '../../models/currency.model';
+import { currencies } from '../../data/currencies';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+  styleUrls: ['./home.page.scss'],
+  standalone: true
 })
 export class HomePage implements OnInit {
+  fromCurrency: string = 'USD';
+  toCurrency: string = 'BRL';
   amount: number = 1;
-  fromCurrency: string = 'BRL';
-  toCurrency: string = 'USD';
-  result: number | null = null;
-  lastUpdate: string = '';
-  error: string = '';
+  result: number = 0;
+  exchangeRate: number = 0;
+  date: string = '';
 
-  availableCurrencies: CurrencyOption[] = [
-    { code: 'BRL', label: 'Real (BRL)',  emoji: '🇧🇷' },
-    { code: 'USD', label: 'Dólar (USD)', emoji: '🇺🇸' },
-    { code: 'EUR', label: 'Euro (EUR)',  emoji: '🇪🇺' },
-    { code: 'GBP', label: 'Libra (GBP)', emoji: '🇬🇧' },
-    { code: 'JPY', label: 'Iene (JPY)',  emoji: '🇯🇵' }
-  ];
+  allCurrencies: Currency[] = currencies;
+  filteredFrom: Currency[] = [];
+  filteredTo: Currency[] = [];
 
   constructor(
     private exchangeService: ExchangeService,
     private storageService: StorageService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.storageService.init(); 
+  async ngOnInit() {
+    // Inicializa o Storage (já feito dentro do próprio StorageService)
+    // Prepara as listas filtráveis
+    this.filteredFrom = this.allCurrencies;
+    this.filteredTo = this.allCurrencies;
 
-    const defaultCur = await this.storageService.get('defaultCurrency');
-    if (defaultCur) this.fromCurrency = defaultCur;
+    // Carrega a última conversão (para preencher o formulário)
+    const last = await this.storageService.getLastConversion();
+    if (last) {
+      this.fromCurrency = last.base;
+      this.toCurrency = last.target;
+      this.amount = last.amount;
+      this.result = last.result;
+      this.exchangeRate = last.rate;
+      this.date = last.date;
+    }
 
-    const lastTo = await this.storageService.get('lastToCurrency');
-    if (lastTo) this.toCurrency = lastTo;
+    // Executa a primeira conversão (para exibir resultado logo que a Home abra)
+    this.convert();
   }
 
-  swapCurrencies(): void {
-    [this.fromCurrency, this.toCurrency] = [this.toCurrency, this.fromCurrency];
-  }
+  convert() {
+    this.exchangeService.convert(this.fromCurrency, this.toCurrency, this.amount)
+      .subscribe({
+        next: async (data) => {
+          this.exchangeRate = data.rate;
+          this.result = data.result;
+          this.date = data.date;
 
-  async convert(): Promise<void> {
-    this.error = '';
-    this.result = null;
-
-    if (!this.amount || this.amount <= 0) {
-      this.error = 'Insira um valor válido.';
-      return;
-    }
-
-    if (this.fromCurrency === this.toCurrency) {
-      this.error = 'Escolha moedas diferentes.';
-      return;
-    }
-
-    const offline = (await this.storageService.get('offlineMode')) ?? false;
-
-    if (offline) {
-      const cachedRate = await this.storageService.get('lastRate');
-      if (cachedRate) {
-        this.result = this.amount * cachedRate;
-        this.lastUpdate = 'Última taxa em cache';
-      } else {
-        this.error = 'Modo offline e sem dados salvos.';
-      }
-      return;
-    }
-
-    this.exchangeService
-      .convert(this.fromCurrency, this.toCurrency, this.amount)
-      .subscribe(
-        async (data) => {
-          this.result = Number(data.result.toFixed(4));
-          this.lastUpdate = data.date;
-
-          await this.storageService.saveConversion({
+          // Cria o objeto Conversion
+          const conv: Conversion = {
             base: this.fromCurrency,
             target: this.toCurrency,
             amount: this.amount,
             result: this.result,
-            rate: data.rate,
-            date: this.lastUpdate
-          });
+            rate: this.exchangeRate,
+            date: this.date
+          };
 
-          await this.storageService.set('lastRate', data.rate);
-          await this.storageService.set('lastToCurrency', this.toCurrency);
+          // 1) Salva no histórico completo
+          await this.storageService.addConversionToHistory(conv);
+
+          // 2) Salva também como "última conversão"
+          await this.storageService.saveLastConversion(conv);
         },
-        (err) => {
-          this.error = 'Erro ao obter taxa: ' + (err?.message || 'Erro desconhecido');
+        error: async () => {
+          // Se estiver offline, tenta recuperar "lastConversion"
+          const saved = await this.storageService.getLastConversion();
+          if (saved 
+              && saved.base === this.fromCurrency 
+              && saved.target === this.toCurrency) {
+            this.exchangeRate = saved.rate;
+            this.result = saved.amount * saved.rate;
+            this.date = saved.date;
+          }
         }
-      );
+      });
+  }
+
+  swapCurrencies() {
+    const temp = this.fromCurrency;
+    this.fromCurrency = this.toCurrency;
+    this.toCurrency = temp;
+    this.convert();
+  }
+
+  filterCurrencies(event: any, type: 'from' | 'to') {
+    const query = event.target.value.toLowerCase();
+    const filtered = this.allCurrencies.filter(currency =>
+      currency.name.toLowerCase().includes(query) ||
+      currency.code.toLowerCase().includes(query)
+    );
+    if (type === 'from') {
+      this.filteredFrom = filtered;
+    } else {
+      this.filteredTo = filtered;
+    }
   }
 }
