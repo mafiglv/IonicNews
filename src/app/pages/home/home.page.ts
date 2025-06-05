@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ExchangeService } from '../../services/exchange.service';
 import { StorageService } from '../../services/storage.service';
 import { Conversion } from '../../models/conversion.model';
@@ -29,12 +30,9 @@ export class HomePage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // Inicializa o Storage (já feito dentro do próprio StorageService)
-    // Prepara as listas filtráveis
     this.filteredFrom = this.allCurrencies;
     this.filteredTo = this.allCurrencies;
 
-    // Carrega a última conversão (para preencher o formulário)
     const last = await this.storageService.getLastConversion();
     if (last) {
       this.fromCurrency = last.base;
@@ -45,7 +43,6 @@ export class HomePage implements OnInit {
       this.date = last.date;
     }
 
-    // Executa a primeira conversão (para exibir resultado logo que a Home abra)
     this.convert();
   }
 
