@@ -1,113 +1,66 @@
-# Explorador de Rick and Morty - Aplicativo Mobile
+# Sistema de Conversão de moedas em tempo real - IonicNews
 
-Aplicativo para explorar o universo de Rick and Morty, desenvolvido para a disciplina de Código de Alta Performance Mobile.
+Aplicativo de conversão de moedas em tempo real, desenvolvido para a disciplina de Código de Alta Performance Mobile.
 
-Projeto desenvolvido por **Germária Lins Vilela**.
-
-Repositório: [https://github.com/mafiglv/mobileRickMorty.git](https://github.com/mafiglv/mobileRickMorty.git)
+Projeto desenvolvido pelo grupo **Ana Beatriz Alves**, **Flávia Sousa Amazonas**, **Germária Lins Vilela** e **Samuel Barbosa**.
 
 ---
 
 ## 📋 Descrição do Projeto
-Este aplicativo consome a API pública de Rick and Morty para exibir personagens, locais e episódios da série. Desenvolvido com Ionic e Angular Standalone, oferece uma experiência mobile fluida e responsiva.
+Este aplicativo permite conversão de moedas em tempo real com suporte a várias moedas, históricos de conversão e interface gráfica de conversões.
 
-Tecnologias utilizadas:
-- Ionic 7
-- Angular 16 (Standalone)
-- TypeScript
-- API Rick and Morty
+O sistema foi desenvolvido em Ionic e TypeScript.
 
 ---
 
 ## 🛠 Funcionalidades Implementadas
 
-- Listagem completa de personagens
-- Detalhes individuais de cada personagem
-- Navegação por abas intuitiva
-- Design responsivo para diferentes telas
-- Integração com API pública
-- Cache de dados para melhor performance
-- Interface com tema escuro
-- Transições suaves entre telas
+- Integração com API de conversão de moedas
+- Interface de usuário responsiva
+- Histórico de conversões
+- Suporte a várias moedas
+- Atualização automática de taxas de câmbio
+- Conversão inversa
+- Funcionalidade offline
+- Interface gráfica de cotações
+- Opções de configurações
 
 ---
 
 ## 📱 Telas do Aplicativo
 
-### Tela de Personagens
-![Lista de Personagens](personagens.png)
-
-### Tela de Detalhes
-![Detalhes do Personagem](screenshots/detalhes.png)
-
-### Tela do Autor
-![Sobre o Autor](screenshots/author.png)
+### Tela Inicial
 
 ---
 
-## 🚀 Como Executar o Projeto
+## 📄 Documentação do projeto
+
+- [Apresentação](https://drive.google.com/file/d/1V1rvGXMMMdUhCKIZweND0cm51Kk740rO/view?usp=sharing)
+- [Casos de uso](https://drive.google.com/file/d/1NYd0JurPdWMIQKh2E5j0V44f61lffw35/view?usp=sharing)
+
+---
+
+## 🚀 Como Rodar o Projeto
 
 1. Clone o repositório:
-   \`\`\`bash
-   git clone https://github.com/mafiglv/mobileRickMorty.git
-   cd mobileRickMorty
-   \`\`\`
+   ```bash
+   git clone https://github.com/mafiglv/IonicNews.git
 
 2. Instale as dependências:
-   \`\`\`bash
-   npm install
-   \`\`\`
+    ```bash
+    npm install
 
-3. Execute o projeto:
-   \`\`\`bash
-   ionic serve
-   \`\`\`
+3. Rode o projeto:
+    ```bash
+    npm start
 
 4. Acesse no navegador:
-   \`\`\`
-   http://localhost:8100
-   \`\`\`
 
-### 📋 Requisitos
-- Node.js 16.x ou superior
-- npm 8.x ou superior
-- Ionic CLI 7.x
-- Navegador atualizado (Chrome, Firefox ou Edge recomendados)
+📋 Requisitos
+npm versão 6.x ou superior
 
----
+Navegador atualizado (Google Chrome, Edge ou Firefox)
 
 ## 📝 Licença
 
-Este projeto está licenciado sob a Licença Creative Commons Atribuição 4.0 Internacional (CC BY 4.0).
-
----
-
-## 👩‍💻 Autora
-
-**Germária Lins Vilela**  
-- Turma: 4NA  
-- Curso: Análise e Desenvolvimento de Sistemas  
-- GitHub: [mafiglv](https://github.com/mafiglv)  
-
----
-
-## 🤝 Como Contribuir
-
-Contribuições são bem-vindas! Siga estes passos:
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (\`git checkout -b feature/FeatureIncrivel\`)
-3. Commit suas mudanças (\`git commit -m 'Adiciona uma FeatureIncrivel'\`)
-4. Push para a branch (\`git push origin feature/FeatureIncrivel\`)
-5. Abra um Pull Request
-
----
-
-## 📚 Documentação Adicional
-
-- [Documentação da API Rick and Morty](https://rickandmortyapi.com/documentation)
-- [Documentação do Ionic](https://ionicframework.com/docs)
-- [Guia Angular Standalone](https://angular.io/guide/standalone-components)
-`;
-
-export default README;
+Este projeto está licenciado sob a Licença Creative Commons CC0 1.0 Universal (Domínio Público).
